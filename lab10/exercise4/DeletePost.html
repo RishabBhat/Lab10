@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Delete Posts</h2>
+</body>
+
+<FORM ACTION="DeletePost.php" METHOD="POST" >
+    <TABLE BORDER="3">
+      <TR>
+          <th scope = "col">Username</th>
+          <th scope = "col">Post ID</th>
+          <th scope = "col">Delete</th>
+          <th scope = "col">Content</th>
+      </TR>
+      <?php 
+        
+        $mysqli = new mysqli("mysql.eecs.ku.edu", "rishabbhat", "oPhah7Ae", "rishabbhat");
+        if ($mysqli->connect_errno) {
+            echo("Connection failed");
+
+
+
+        }
+        else {
+            $query = "SELECT * FROM Posts";
+
+        
+            if ($result = $mysqli->query($query)) {
+
+                if (mysqli_num_rows($result) > 0) {
+
+                    while($row = $result->fetch_assoc()) {
+
+                       
+                        echo('<td>'.$row["author_id"].'</td>');
+                        
+                        echo('<td>'.$row["post_id"].'</td>');
+
+                        echo('<td>');
+
+                        echo('<INPUT TYPE = "checkbox" NAME = "delete[]" value = '.$row["post_id"].' >');
+
+                        echo('</td><td>'.$row["content"].'</td>');
+
+                        echo('<tr>');
+                    }
+                }
+                else {
+                    echo("No Posts");
+
+                }
+            }
+            
+        }
+        
+      ?>
+    </TABLE>
+    <INPUT TYPE="SUBMIT" VALUE="Submit" >
+    </FORM>
+
+</html>
